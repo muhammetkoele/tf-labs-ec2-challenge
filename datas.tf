@@ -33,4 +33,9 @@ data "aws_instance" "tf_data_public_bastion" {
     name = "tag:Name"
     values = ["Public bastion instance"]
   }
+  filter {
+    name = "instance-state-name"
+    values = ["running"]
+  }
 }
+
