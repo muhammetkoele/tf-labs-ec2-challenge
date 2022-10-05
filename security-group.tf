@@ -38,7 +38,8 @@ resource "aws_security_group" "tf_security_group_allow_traffic_bastion_to_privat
     from_port   = 22
     to_port     = 22
     protocol    = "tcp"
-    cidr_blocks = ["${data.aws_instance.tf_data_public_bastion.private_ip}/32"]
+    # cidr_blocks = ["${data.aws_instance.tf_data_public_bastion.private_ip}/32"]
+    security_groups = [aws_security_group.tf_security_group_allow_traffic_public_instances.id]
   }
 
   tags = {
