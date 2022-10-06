@@ -7,6 +7,15 @@ data "aws_ami" "tf_data_ami" {
   }
 }
 
+data "aws_ami" "tf_data_ami_ubuntu" {
+  owners = [var.aws_account_id, "amazon"] 
+  most_recent = true
+  filter {
+    name = "name"
+    values = [var.aws_ami_name_ubuntu]
+  }
+}
+
 data "aws_vpc" "tf_data_vpc" {
   filter {
     name   = "tag:Name"

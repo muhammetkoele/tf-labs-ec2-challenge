@@ -8,6 +8,11 @@ variable "aws_ami_name" {
   type = string
 }
 
+variable "aws_ami_name_ubuntu" {
+  description = "Name of the ami ubuntu for ec2-challenge part 2"
+  type = string
+}
+
 variable "ec2_instance_type" {
   type = string
 }

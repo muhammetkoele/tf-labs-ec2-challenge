@@ -12,6 +12,14 @@ resource "aws_security_group" "tf_security_group_allow_traffic_public_instances"
     cidr_blocks = ["0.0.0.0/0"] # accept from everywhere
   }
 
+  ingress {
+    description = "Allow incoming HTTP connection"
+    from_port   = 80
+    to_port     = 80
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"] # accept from everywhere
+  }
+
   egress {
     description = "Allow access to the internet"
     from_port        = 0

@@ -10,6 +10,18 @@ resource "aws_instance" "tf_instance_public_bastion" {
   }
 }
 
+resource "aws_instance" "tf_instance_public_dashboard" {
+  subnet_id              = data.aws_subnet.tf_data_subnet.id
+  instance_type          = var.ec2_instance_type
+  ami                    = data.aws_ami.tf_data_ami_ubuntu.id
+  vpc_security_group_ids = [aws_security_group.tf_security_group_allow_traffic_public_instances.id]
+  key_name               = var.key_name
+  tags = {
+    Name = "Public dashboard for showing private instance statuses"
+    Project = "tf-labs-ec2-challenge"
+  }
+}
+
 resource "aws_instance" "tf_instance_private" {
   count                  = 3
   subnet_id              = data.aws_subnet.tf_data_subnet1_private.id
