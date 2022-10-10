@@ -37,3 +37,20 @@ data "aws_subnet" "tf_data_subnet1_private" {
   }
 }
 
+data "aws_secretsmanager_secret" "tf_ec2_challenge_user_credentials"{
+    name = "ec2-challenge-user-credentials"
+}
+
+data "aws_secretsmanager_secret_version" "tf_ec2_challenge_user_credentials_secret_version"{
+    secret_id = data.aws_secretsmanager_secret.tf_ec2_challenge_user_credentials.id
+}
+
+output "ec2-challenge-user-access-key-id" {
+    value = jsondecode(nonsensitive(data.aws_secretsmanager_secret_version.tf_ec2_challenge_user_credentials_secret_version.secret_string))["ec2-challenge-access-key-id"]
+    sensitive = true # remove if you want to see value on terminal
+}
+
+output "ec2-challenge-secret-access-key" {
+    value = jsondecode(nonsensitive(data.aws_secretsmanager_secret_version.tf_ec2_challenge_user_credentials_secret_version.secret_string))["ec2-challenge-secret-access-key"]
+    sensitive = true
+}
