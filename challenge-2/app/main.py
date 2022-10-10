@@ -16,7 +16,7 @@ def show_private_instance_details():
     reservations = client.describe_instances()["Reservations"]
     for reservation in reservations:
         for instance in reservation["Instances"]:
-            if instance["SubnetId"] == private_subnet_1_id:
+            if instance.get("SubnetId") == private_subnet_1_id:
                 instances.append([instance["InstanceId"], instance["State"]["Name"], instance["LaunchTime"],
                 instance["Placement"]["AvailabilityZone"]])
     return render_template("instance.html", instances_data=instances)
