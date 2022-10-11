@@ -29,6 +29,4 @@ sudo docker build -t challenge-2-image .
 
 # run application container
 sudo docker run  --env AWS_DEFAULT_REGION=eu-central-1 \
-                 --env AWS_ACCESS_KEY_ID=${access-key-id-placeholder}\
-                 --env AWS_SECRET_ACCESS_KEY=${secret-access-key-placeholder}\
                  -d --name challenge-2-container -p 80:80 challenge-2-image

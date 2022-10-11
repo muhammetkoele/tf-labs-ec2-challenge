@@ -16,10 +16,8 @@ resource "aws_instance" "tf_instance_public_dashboard" {
   ami                    = data.aws_ami.tf_data_ami_ubuntu.id
   vpc_security_group_ids = [aws_security_group.tf_security_group_allow_traffic_public_instances.id]
   key_name               = var.key_name
-  user_data              = templatefile("${path.module}/user-data.sh.tftpl", {
-        access-key-id-placeholder = jsondecode(nonsensitive(data.aws_secretsmanager_secret_version.tf_ec2_challenge_user_credentials_secret_version.secret_string))["ec2-challenge-access-key-id"],
-        secret-access-key-placeholder = jsondecode(nonsensitive(data.aws_secretsmanager_secret_version.tf_ec2_challenge_user_credentials_secret_version.secret_string))["ec2-challenge-secret-access-key"]
-      })
+  user_data              = file("${path.module}/user-data.sh")
+  iam_instance_profile   = aws_iam_instance_profile.tf_ec2_instance_profile.name
   tags = {
     Name = "Public dashboard for showing private instance statuses"
     Project = "tf-labs-ec2-challenge"
